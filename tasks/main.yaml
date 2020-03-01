@@ -1,17 +1,7 @@
 ---
-- name: "Fail if OS/Architecture is not supported"
-  fail:
-    msg: "Installing curl on {{ (ansible_os_family | lower) + '_' + (ansible_architecture | lower) }} is unsupported."
-  when:
-    - "(install_curl_packages | default({}))[(ansible_os_family | lower) + '_' + (ansible_architecture | lower)] is not defined"
-    - "curl is defined"
-  tags:
-    - "curl"
 - name: "Install curl"
   package:
     pkg: "{{ install_curl_packages[(ansible_os_family | lower) + '_' + (ansible_architecture | lower)] }}"
     state: "present"
-  when:
-    - "curl is defined"
   tags:
     - "curl"
